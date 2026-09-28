@@ -199,7 +199,7 @@ export const ABOUT_GALLERY: GalleryImage[] = [
   {
     src: "/images/about-03.webp",
     alt: "Close-up of electrical wiring and connections",
-    native: "2526 / 1842",
+    native: "1412 / 1792",
     sizes: "(min-width: 1024px) 33vw, 100vw",
   },
   {
