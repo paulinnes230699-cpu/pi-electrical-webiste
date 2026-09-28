@@ -78,6 +78,22 @@ interface WorkCarouselProps {
  * The arrows wrap rather than disabling at the ends, so a visitor who reaches
  * slide 1 and presses back gets the last photograph instead of a control that
  * does nothing - which is also what the auto-advance loop itself does.
+ *
+ * ---------------------------------------------------------------------------
+ * WHY THERE IS NO RUNWAY
+ * ---------------------------------------------------------------------------
+ * This strip once rendered two extra copies of the first photographs at the
+ * tail, so that stepping forward off the last slide landed on a copy of slide 1
+ * and the loop turned over in one ordinary stride instead of sweeping back
+ * across all eight. The catch is that the copy is the same photograph: to the
+ * visitor, slide 1 simply arrived twice in a row, on autoplay and on the arrow
+ * alike. Ten image nodes for eight photographs, and no amount of aria-hidden
+ * hides a duplicate to someone looking at the screen.
+ *
+ * So the copies are gone and the wrap is an un-animated cut instead, with a
+ * longer dwell on the last slide so the jump reads as a new cycle. Every
+ * photograph is now shown exactly once, and the DOM is eight slides for eight
+ * photographs.
  * ---------------------------------------------------------------------------
  * ALT TEXT IS CURRENTLY TODO
  * ---------------------------------------------------------------------------
@@ -105,9 +121,14 @@ export default function WorkCarousel({
     className: headingClassName = "mb-10",
   } = heading ?? {};
 
-  /** At 3.5s a slide this loops every 28s across the eight current photographs,
-      tighter than the 4s QuickActions uses for its five. */
+  /** At 3.5s a slide this takes about 31.5s round the eight current
+      photographs - seven steps plus the longer dwell on the last one - tighter
+      than the 4s QuickActions uses for its five. */
   const INTERVAL_MS = intervalMs;
+
+  /** Extra beat on the final photograph before the loop cuts back to the first,
+      so the jump reads as a new cycle rather than the strip glitching. */
+  const END_HOLD_MS = intervalMs;
 
   const headingId = `work-heading-${useId()}`;
 
@@ -115,7 +136,12 @@ export default function WorkCarousel({
     count: imageList.length,
     interval: INTERVAL_MS,
     maxWidth: ALL_WIDTHS,
-    loop: true,
+    /* No runway. Duplicating the first photographs at the tail makes the wrap a
+       smooth one-stride step, but the copies are the same pictures, so the
+       visitor watches slide 1 arrive twice in a row. Cutting instead shows every
+       photograph exactly once. See lib/auto-advance.ts. */
+    wrapToStart: true,
+    endHoldMs: END_HOLD_MS,
   });
 
   return (
@@ -167,12 +193,7 @@ export default function WorkCarousel({
               data-active={i === index ? "true" : undefined}
               /* One slide per view on a phone, two on a tablet and up, with the
                  basis being w-4/5 against a px-5 gutter, so 92vw of frame inside
-                 the shell.
-
-                 A looping runway (two extra slides at the tail) gives the arrows
-                 enough room to step every photo into the start edge rather than
-                 skipping it - see lib/auto-advance.ts, which corrects position
-                 across the runway. */
+                 the shell. */
               className="w-[78vw] shrink-0 snap-start sm:w-[46vw] lg:w-[38vw]"
             >
               <div
@@ -199,41 +220,6 @@ export default function WorkCarousel({
                      viewport, and a priority image here would compete with the
                      hero for the LCP slot. */
                   quality={75}
-                />
-              </div>
-</li>
-           ))}
-
-          {/*
-             Looping runway: two copies of the first photographs at the tail, so
-             the arrows can step continuously past slide 6 and come back to
-             slide 1 without grinding to a dead end. These are hidden from
-             assistive tech because they are identical to the originals; the
-             visitor sees the same photo as the loop turns over.
-           */}
-          {imageList.slice(0, 2).map((image) => (
-            <li
-              key={image.src + "-runway"}
-              data-work-slide
-              data-runway="true"
-              aria-hidden="true"
-              className="w-[78vw] shrink-0 snap-start sm:w-[46vw] lg:w-[38vw]"
-            >
-              <div
-                className={cx(
-                  "relative overflow-hidden rounded-lg bg-surface",
-                  "shadow-[0_2px_0_0_rgba(21,24,22,0.08)]",
-                )}
-                style={{ aspectRatio: "4 / 5" }}
-              >
-                <Image
-                  src={image.src}
-                  alt=""
-                  fill
-                  className="object-cover"
-                  quality={75}
-                  style={{ objectPosition: "center 20%" }}
-                  sizes={image.sizes}
                 />
               </div>
             </li>

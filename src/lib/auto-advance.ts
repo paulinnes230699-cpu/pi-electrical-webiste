@@ -74,8 +74,8 @@ export interface AutoAdvance<T extends HTMLElement> {
   ref: React.RefObject<T | null>;
   /**
    * Index of the item nearest the left edge, for the position indicators.
-   * Always within 0..count-1, even on a looping strip, so callers can use it
-   * against their own items without knowing about the runway copies.
+   * Always within 0..count-1 whichever wrap mode is in play, so callers can use
+   * it against their own items without knowing how the loop gets back round.
    */
   index: number;
   /** True once the visitor has interacted. Exposed for tests and future UI. */
@@ -110,23 +110,52 @@ export function useAutoAdvance<T extends HTMLElement>({
   count,
   maxWidth = MOBILE_MAX,
   loop = false,
+  wrapToStart = false,
+  endHoldMs = 0,
 }: {
   /** Delay between steps, in ms. */
   interval?: number;
-  /** Number of items. The loop wraps at this many. */
+  /** Number of items in the strip. */
   count: number;
   /** Media query bounding the widths that advance. */
   maxWidth?: string;
   /**
-   * Set when the caller repeats the first slides at the end of the strip as
-   * runway, so the last real slide can be scrolled to the start edge and the
-   * strip can keep going forwards without a dead end. See the LONG NOTE on
-   * runway copies in WorkCarousel.tsx for why a strip of photos needs this.
+   * Runway mode: set when the caller repeats the first slides at the end of the
+   * strip, so the last real slide can be scrolled to the start edge and the
+   * strip can keep going forwards without a dead end.
    *
    * Off by default: QuickActions is a plain list with no runway, and folding
    * positions that are not there would be nonsense.
+   *
+   * NOTE: no caller sets this any more. It is kept because it is a working,
+   * documented way to build a runway strip, not because anything needs it. See
+   * `wrapToStart` for what the work carousel uses instead, and why.
    */
   loop?: boolean;
+  /**
+   * Cut wrap: with no runway, stepping forward off the last slide jumps
+   * straight back to the first with no animation, rather than animating a long
+   * sweep back across the whole strip.
+   *
+   * This is the fix for a runway that reads as a bug. A runway duplicates the
+   * first photographs at the tail so the wrap costs one ordinary stride instead
+   * of a rewind, but the duplicate is the same photograph to the eye, so the
+   * visitor watches slide 1 arrive twice in a row. Removing the runway and
+   * cutting instead costs a jump nobody minds and shows every photograph once.
+   *
+   * Wins over `loop` if both are set, since it is the whole point that there is
+   * no runway to aim at.
+   */
+  wrapToStart?: boolean;
+  /**
+   * Extra dwell on the last slide before the loop cuts back to the first, in
+   * ms, on top of the normal `interval`. Zero by default.
+   *
+   * A cut from the last slide to the first reads better when the visitor has
+   * been given a moment to register the end of the set. Without it the cut
+   * looks like the strip glitching rather than starting a new cycle.
+   */
+  endHoldMs?: number;
 }): AutoAdvance<T> {
   const ref = useRef<T | null>(null);
 
@@ -172,11 +201,11 @@ export function useAutoAdvance<T extends HTMLElement>({
    * ignores the flex gap, so the answer drifts further off the further along
    * the strip you go, and it cannot describe a clamped end at all.
    *
-   * On a looping strip the position is folded back into the first cycle, and
-   * the scroll is corrected to match, before the value is returned. The copy
-   * the visitor is looking at is identical to the real slide it stands in for,
-   * so the correction is invisible - and without it the strip would grind to a
-   * halt on the runway and the indicators would keep climbing past count.
+   * In runway mode the position is folded back into the first cycle, and the
+   * scroll is corrected to match, before the value is returned, so the reported
+   * index never exceeds count. With `wrapToStart` there is nothing to fold -
+   * the strip holds exactly `count` children and the cut wrap returns to zero
+   * itself, so this is a plain reading of position.
    */
   const measureAbsolute = useCallback((): number => {
     const el = ref.current;
@@ -247,7 +276,13 @@ export function useAutoAdvance<T extends HTMLElement>({
    * 1. It clamps to the real scrollable range. A strip does not always have the
    *    runway to bring every slide to the start edge, and the browser silently
    *    discards the overshoot - so the strip stops moving while the indicators
-   *    claim it did. A looping strip has runway and never hits this.
+   *    claim it did. A runway strip never hits this.
+   *
+   *    The work carousel does hit it, and that is expected. At lg the slides
+   *    are 38vw, so two and a bit are visible and the last photograph cannot be
+   *    pulled flush to the start edge. It parks against the end of the strip
+   *    instead, and `measureAbsolute` names the last child directly when the
+   *    strip is clamped, so the indicator still reports it correctly.
    *
    * 2. It reports null when the resolved position is where the strip already
    *    is, so a caller can skip an unreachable target instead of firing a
@@ -311,12 +346,20 @@ export function useAutoAdvance<T extends HTMLElement>({
   /**
    * Step one slide in `dir`, wrapping at the ends, and return the new index.
    *
-   * The wrap is the fiddly part. On a looping strip, stepping forward off the
-   * last slide aims at the first runway copy rather than at slide 1 itself:
-   * the copy is the same photograph, so the wrap costs one ordinary stride
-   * forwards instead of a fast sweep back across the entire strip, which is
-   * what a plain `scrollTo(0)` looks like. Stepping back off the first slide
-   * needs no such trick - the last real slide is already there to step back to.
+   * There are two ways to wrap, and picking the wrong one is why a strip can end
+   * up showing the visitor the same photograph twice:
+   *
+   * - Runway (`loop`): stepping forward off the last slide aims at a duplicate
+   *   of slide 1 that the caller rendered at the tail, so the wrap costs one
+   *   ordinary stride instead of a sweep back across the whole strip. Cheap and
+   *   seamless, but for photographs the duplicate is the same picture, so the
+   *   visitor sees slide 1 arrive twice in a row.
+   * - Cut (`wrapToStart`): there is no runway, so the wrap is an un-animated
+   *   jump to position zero. It shows every photograph exactly once and trades
+   *   the seamlessness for not looking broken.
+   *
+   * Stepping back off the first slide needs neither trick. The last real slide
+   * is already there to step back to, so both modes just target it.
    *
    * The walk over `hop` is what keeps this honest on a strip with no runway,
    * where the slide next to the one on screen may have nowhere to go: it keeps
@@ -328,6 +371,31 @@ export function useAutoAdvance<T extends HTMLElement>({
       const from = measureAbsolute();
       const total = ref.current?.children.length ?? 0;
       if (count <= 1 || total <= 1) return null;
+
+      /* Cut wrap. Checked before the hop walk, which would otherwise find no
+         reachable target past the last slide and return null - and a null from
+         `next` tells the timed loop there is nowhere to go, which stands the
+         whole loop down for good. So the wrap has to be handled here, not
+         left to the walk. */
+      if (dir === 1 && wrapToStart && from >= count - 1) {
+        const el = ref.current;
+        if (!el) return null;
+
+        /* Nothing to scroll: a multi-column grid with overflow visible. There
+           is no position to report, same as in `resolve`. */
+        if (el.scrollWidth - el.clientWidth <= 0) return null;
+
+        /* Instant, never smooth. Animating this is exactly the fast sweep back
+           across the whole strip the cut exists to avoid. */
+        selfScrollRef.current = true;
+        el.scrollTo({ left: 0, behavior: "instant" });
+        window.setTimeout(() => {
+          selfScrollRef.current = false;
+        }, SETTLE_MS);
+
+        setIndex(0);
+        return 0;
+      }
 
       for (let hop = 1; hop <= count; hop += 1) {
         const reached = from + dir * hop;
@@ -348,7 +416,7 @@ export function useAutoAdvance<T extends HTMLElement>({
 
       return null;
     },
-    [count, loop, measureAbsolute, moveTo],
+    [count, loop, measureAbsolute, moveTo, wrapToStart],
   );
 
   /** Step forward, wrapping past the last slide back to the first. */
@@ -395,9 +463,15 @@ export function useAutoAdvance<T extends HTMLElement>({
          wasted work and it desynchronises the indicators, so sit it out. */
       if (ref.current?.closest("[inert]")) return;
 
-      if (next() === null) return;
+      const landed = next();
+      if (landed === null) return;
 
-      timerRef.current = setTimeout(tick, interval);
+      /* Linger on the last slide before the cut back to the first, so the jump
+         lands as the start of a new cycle rather than a strip that glitched. */
+      const dwell =
+        endHoldMs > 0 && landed === count - 1 ? interval + endHoldMs : interval;
+
+      timerRef.current = setTimeout(tick, dwell);
     };
 
     const schedule = () => {
@@ -428,7 +502,7 @@ export function useAutoAdvance<T extends HTMLElement>({
       reduceMotion.removeEventListener("change", onMedia);
       mobile.removeEventListener("change", onMedia);
     };
-  }, [count, interval, maxWidth, next, clearTimer]);
+  }, [count, interval, maxWidth, next, clearTimer, endHoldMs]);
 
   /* ---------------------------------------------------------------------
    * Keep the indicators honest after a manual swipe
