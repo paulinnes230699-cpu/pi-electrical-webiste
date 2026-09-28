@@ -9,7 +9,7 @@ import { WORK_GALLERY } from "@/data/media";
 
 export interface GalleryImage {
   src: string;
-  /** See the alt-text warning above. Replace before this ships to customers. */
+  /** Describes the visible photograph. */
   alt: string;
   /** Native ratio of the source file, recorded so the crop is not a surprise. */
   native: string;
@@ -97,12 +97,7 @@ interface WorkCarouselProps {
  * photograph is now shown exactly once, and the DOM is one node per
  * photograph.
  * ---------------------------------------------------------------------------
- * ALT TEXT IS CURRENTLY TODO
- * ---------------------------------------------------------------------------
- * Every entry in WORK_GALLERY still carries a `TODO(alt)` description. See the
- * warning in data/media.ts. Until those are written the images are effectively
- * invisible to a screen reader, which is why they are marked rather than
- * silently empty.
+ * Alt text is maintained alongside the image filenames in data/media.ts.
  * ============================================================================
  */
 

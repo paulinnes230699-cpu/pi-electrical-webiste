@@ -1,0 +1,102 @@
+[
+  {
+    "source": "/images/work-08.webp",
+    "destination": "/images/garden-step-led-lighting-night.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/work-01.webp",
+    "destination": "/images/kitchen-glass-pendant-lighting.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/work-02.webp",
+    "destination": "/images/kitchen-island-plinth-lighting.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/work-04.webp",
+    "destination": "/images/vaulted-living-room-downlights.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/work-05.webp",
+    "destination": "/images/dining-room-pendant-downlights.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/work-06.webp",
+    "destination": "/images/house-exterior-lighting-night.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/work-07.webp",
+    "destination": "/images/electrical-lighting-project-collage.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/about-01.webp",
+    "destination": "/images/kitchen-pendant-lights-breakfast-bar.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/about-04.webp",
+    "destination": "/images/green-kitchen-ceiling-downlights.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/about-05.webp",
+    "destination": "/images/bathroom-recessed-ceiling-lights.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/about-06.webp",
+    "destination": "/images/rear-house-exterior-downlights.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/gallery/gallery-01.webp",
+    "destination": "/images/gallery/dark-kitchen-led-lighting.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/gallery/gallery-02.webp",
+    "destination": "/images/gallery/kitchen-renovation-downlights.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/gallery/gallery-03.webp",
+    "destination": "/images/gallery/white-kitchen-recessed-lighting.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/gallery/gallery-04.webp",
+    "destination": "/images/gallery/shower-room-ceiling-downlights.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/gallery/gallery-05.webp",
+    "destination": "/images/gallery/timber-garden-room-wall-lights.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/gallery/gallery-06.webp",
+    "destination": "/images/gallery/garden-room-track-lighting.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/gallery/gallery-07.webp",
+    "destination": "/images/gallery/garage-exterior-downlights.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/gallery/gallery-08.webp",
+    "destination": "/images/gallery/commercial-washroom-downlights.webp",
+    "permanent": true
+  },
+  {
+    "source": "/images/gallery/gallery-09.webp",
+    "destination": "/images/gallery/stockroom-ceiling-batten-lights.webp",
+    "permanent": true
+  }
+]

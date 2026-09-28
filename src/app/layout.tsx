@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileActionBar from "@/components/MobileActionBar";
 import { BUSINESS, SITE_URL } from "@/data/business";
+import { SOCIAL } from "@/data/social";
 import { AREA_LIST } from "@/data/areas";
 import "./globals.css";
 
@@ -94,7 +95,8 @@ function structuredData() {
         url: SITE_URL,
         telephone: BUSINESS.phone.international,
         email: BUSINESS.email.display,
-        image: `${SITE_URL}/opengraph-image`,
+        image: `${SITE_URL}/opengraph-image.png`,
+        sameAs: Object.values(SOCIAL).map((profile) => profile.href),
         logo: `${SITE_URL}/images/mark.png`,
         address: {
           "@type": "PostalAddress",

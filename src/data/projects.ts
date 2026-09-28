@@ -1,70 +1,13 @@
-/**
- * ============================================================================
- * PROJECTS
- * ----------------------------------------------------------------------------
- * Nine completed-work photographs, one per entry. The gallery, the
- * Domestic/Commercial filter and the lightbox all read from here, so adding a
- * tenth photograph is a one-object change and needs no component edits.
- *
- * ---------------------------------------------------------------------------
- * THE CONTENT FIELDS ARE BLANK ON PURPOSE - TODO(content)
- * ---------------------------------------------------------------------------
- * `title`, `category`, `location`, `description`, `workCompleted` and every
- * photo's `alt` are all empty. They are empty because the photographs were
- * supplied as image files and nobody who can see them has written the words
- * yet. A card captioned with a guessed project name, a guessed area and a
- * guessed list of work would be fabricated evidence of work this electrician may
- * not have done - which is the single worst thing this site could ship.
- *
- * So the components omit any field that is empty rather than printing a
- * placeholder, and the tiles render as bare photographs. That reads as a
- * slightly plain gallery rather than a dishonest one, which is the right way
- * round.
- *
- * `grep -rn "TODO(content)" src/` lists every gap.
- *
- * WHAT EACH FIELD NEEDS
- *   title          Short name for the job, e.g. "Full rewire, 3-bed house".
- *   category       "domestic" or "commercial". Drives the filter chips.
- *   location       Town or area, or null to omit the line entirely.
- *   description    Two or three sentences of what the job involved.
- *   workCompleted  Short imperative bullets of what was actually done.
- *   photos[].alt   What is in the frame. "Rewired consumer unit with labelled
- *                  circuits in a renovated kitchen", not "Electrical work".
- *
- * category is nullable so a photograph nobody has classified yet still appears
- * under "All" instead of being mislabelled. Until the categories are filled in,
- * the Domestic and Commercial chips show their empty state.
- *
- * ---------------------------------------------------------------------------
- * ORIENTATION IS RECORDED, NOT RENDERED
- * ---------------------------------------------------------------------------
- * `orientation` is the native shape of the file, kept for two reasons: the card
- * picks an object-position, and it is what a before/after pair will need to be
- * checked against. The card frame itself is a uniform 4/3 for all nine, because
- * seven of them are portrait and letting each card pick its own ratio leaves a
- * ragged grid.
- *
- * ---------------------------------------------------------------------------
- * gallery-07 NEEDS A HUMAN EYE
- * ---------------------------------------------------------------------------
- * Its channel means are 91/119/141 against roughly 126/124/118 for the rest -
- * a pronounced blue cast that usually means a photograph of a screen rather
- * than a photograph. It is in the grid because it was supplied as completed
- * work; it should be confirmed or removed before this ships to customers.
- * ============================================================================
+/** Project photography uses descriptive filenames and visually verified alt text.
+ * Job details remain blank until confirmed by the business; do not infer locations
+ * or the scope of completed work solely from photographs.
  */
 
 export type ProjectCategory = "domestic" | "commercial";
 
 export interface ProjectPhoto {
   src: string;
-  /**
-   * See the alt-text warning above. This is not display copy - it is only ever
-   * read aloud or surfaced by a broken-image state, so a visitor will not see
-   * the TODO marker. It is still not optional: an empty alt on a photograph of
-   * a job is a hole in the page.
-   */
+  /** Describes the visible photograph. */
   alt: string;
   /** Native shape of the source file. See the note above. */
   orientation: "portrait" | "landscape" | "square";
@@ -104,8 +47,8 @@ export const PROJECTS: Project[] = [
     workCompleted: [],
     photos: [
       {
-        src: "/images/gallery/gallery-01.webp",
-        alt: "TODO(content): landscape photograph - describe the work",
+        src: "/images/gallery/dark-kitchen-led-lighting.webp",
+        alt: "Dark kitchen with pendant lights, under-cabinet lighting and illuminated plinths",
         orientation: "landscape",
       },
     ],
@@ -121,8 +64,8 @@ export const PROJECTS: Project[] = [
     workCompleted: [],
     photos: [
       {
-        src: "/images/gallery/gallery-02.webp",
-        alt: "TODO(content): describe the work shown",
+        src: "/images/gallery/kitchen-renovation-downlights.webp",
+        alt: "Kitchen renovation with illuminated ceiling downlights and a roof window",
         orientation: "portrait",
       },
     ],
@@ -138,8 +81,8 @@ export const PROJECTS: Project[] = [
     workCompleted: [],
     photos: [
       {
-        src: "/images/gallery/gallery-03.webp",
-        alt: "TODO(content): describe the work shown",
+        src: "/images/gallery/white-kitchen-recessed-lighting.webp",
+        alt: "White kitchen with wood-effect wall cabinets and recessed ceiling lights",
         orientation: "square",
       },
     ],
@@ -155,8 +98,8 @@ export const PROJECTS: Project[] = [
     workCompleted: [],
     photos: [
       {
-        src: "/images/gallery/gallery-04.webp",
-        alt: "TODO(content): describe the work shown",
+        src: "/images/gallery/shower-room-ceiling-downlights.webp",
+        alt: "Shower room with recessed ceiling lights, a round mirror and a vanity unit",
         orientation: "portrait",
       },
     ],
@@ -172,8 +115,8 @@ export const PROJECTS: Project[] = [
     workCompleted: [],
     photos: [
       {
-        src: "/images/gallery/gallery-05.webp",
-        alt: "TODO(content): describe the work shown",
+        src: "/images/gallery/timber-garden-room-wall-lights.webp",
+        alt: "Timber-clad garden room with exterior wall lights and open folding doors",
         orientation: "portrait",
       },
     ],
@@ -189,8 +132,8 @@ export const PROJECTS: Project[] = [
     workCompleted: [],
     photos: [
       {
-        src: "/images/gallery/gallery-06.webp",
-        alt: "TODO(content): describe the work shown",
+        src: "/images/gallery/garden-room-track-lighting.webp",
+        alt: "Garden room interior with ceiling track lights and surface-mounted conduit",
         orientation: "portrait",
       },
     ],
@@ -206,9 +149,8 @@ export const PROJECTS: Project[] = [
     workCompleted: [],
     photos: [
       {
-        /* See the blue-cast warning at the head of this file. */
-        src: "/images/gallery/gallery-07.webp",
-        alt: "TODO(content): describe the work shown",
+        src: "/images/gallery/garage-exterior-downlights.webp",
+        alt: "Detached garage illuminated by exterior downlights at dusk",
         orientation: "landscape",
       },
     ],
@@ -224,8 +166,8 @@ export const PROJECTS: Project[] = [
     workCompleted: [],
     photos: [
       {
-        src: "/images/gallery/gallery-08.webp",
-        alt: "TODO(content): describe the work shown",
+        src: "/images/gallery/commercial-washroom-downlights.webp",
+        alt: "Washroom with ceiling downlights above basins, urinals and toilet cubicles",
         orientation: "portrait",
       },
     ],
@@ -241,8 +183,8 @@ export const PROJECTS: Project[] = [
     workCompleted: [],
     photos: [
       {
-        src: "/images/gallery/gallery-09.webp",
-        alt: "TODO(content): describe the work shown",
+        src: "/images/gallery/stockroom-ceiling-batten-lights.webp",
+        alt: "Stockroom with ceiling-mounted batten lights above shelving and storage cages",
         orientation: "portrait",
       },
     ],

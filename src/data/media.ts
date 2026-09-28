@@ -11,7 +11,7 @@
  *
  * There is no `hero` slot any more. The hero is text-only; the photography
  * lives in the work carousel below it. See WORK_GALLERY at the foot of this
- * file - that one is real assets, and its alt text is still TODO.
+ * file for the real project photographs.
  *
  * TO ATTACH A REAL IMAGE
  * ----------------------
@@ -58,8 +58,8 @@ export const MEDIA = {
   },
   domesticBreak: {
     needs: "Large photograph - extension or renovation electrical work",
-    src: "/images/work-07.webp",
-    alt: "Large photograph - extension or renovation electrical work. Full domestic and commercial scope, from a single socket to a complete installation. PI Electrical covers Bonnyrigg and the surrounding region.",
+    src: "/images/electrical-lighting-project-collage.webp",
+    alt: "Collage of garden room electrics, sockets, kitchen lighting and ceiling lights",
     ratio: "16 / 10",
     sizes: "100vw",
   },
@@ -81,45 +81,13 @@ export const MEDIA = {
 
 export type MediaKey = keyof typeof MEDIA;
 
-/* ============================================================================
- * WORK CAROUSEL
- * ---------------------------------------------------------------------------
-  * Seven photographs of completed work, shown in a self-advancing carousel
- * directly below the hero. Every one of these is a real asset, so unlike the
- * slots above there is no placeholder fallback and no `needs` prompt.
- *
- * ---------------------------------------------------------------------------
- * ALT TEXT IS A PLACEHOLDER AND MUST BE REPLACED
- * ---------------------------------------------------------------------------
- * Every `alt` below begins `TODO(alt)`. That is deliberate and it is not a
- * coding convenience: the model that assembled this had no image-input
- * capability and could not see what the photographs contain. Rather than
- * write plausible-sounding descriptions, which would be fabricated claims
- * about a real client's work, the field is left obviously unfinished.
- *
- * `grep -rn "TODO(alt)" src/` lists every one. Each needs a real sentence
- * describing the work in the frame - "Rewired consumer unit with labelled
- * circuits in a renovated kitchen", not "Electrical work". Until then these
- * read as empty to a screen reader, which is why they are marked rather than
- * quietly left as "".
- *
- * ---------------------------------------------------------------------------
- * WORK-01 IS LANDSCAPE IN A PORTRAIT FRAME
- * ---------------------------------------------------------------------------
- * Three of the seven are landscape: work-01 (1846x1384, 1.33), work-02
- * (1754x1376, 1.28) and work-08 (1212x1076, 1.13). The other four are portrait,
- * 0.82-0.90. The carousel frame is a uniform 4/5, so the landscape ones are
- * object-cover cropped and lose 40%, 37% and 29% of their width respectively;
- * the portrait ones lose 3-11%. Keeping all seven beat dropping any for ratio
- * consistency, but the crop point is centre, because it was not possible to see
- * where the subject sits. If a subject gets cut, `objectPosition` on that entry
- * is the fix, and it is the one field here that most needs a human eye.
- * ============================================================================
+/** Carousel photographs retain their original files and visual adjustments.
+ * Alt text describes visible content without guessing job locations.
  */
 
 export interface GalleryImage {
   src: string;
-  /** See the alt-text warning above. Replace before this ships to customers. */
+  /** Describes the visible photograph. */
   alt: string;
   /** Native ratio of the source file, recorded so the crop is not a surprise. */
   native: string;
@@ -142,9 +110,9 @@ export interface GalleryImage {
  */
 export const WORK_GALLERY: GalleryImage[] = [
   {
-    src: "/images/work-08.webp",
+    src: "/images/garden-step-led-lighting-night.webp",
     rotation: -2,
-    alt: "TODO(alt): describe the work shown, and note that the 4/5 frame crops about 14% off each side",
+    alt: "Garden steps and stone walls illuminated by LED strip lighting at night",
     native: "1212 / 1076",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
@@ -156,36 +124,36 @@ export const WORK_GALLERY: GalleryImage[] = [
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
-    src: "/images/work-01.webp",
+    src: "/images/kitchen-glass-pendant-lighting.webp",
     rotation: 1,
-    alt: "TODO(alt): landscape shot, cropped hard in a 4/5 frame - describe the work and note the subject is centred",
+    alt: "Glass pendant lights above a kitchen island with recessed ceiling lights",
     native: "1846 / 1384",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
-    src: "/images/work-02.webp",
+    src: "/images/kitchen-island-plinth-lighting.webp",
     rotation: -1,
-    alt: "TODO(alt): describe the work shown in this photograph",
+    alt: "Dark kitchen cabinets with pendant lights, under-cabinet lighting and illuminated plinths",
     native: "1754 / 1376",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
-    src: "/images/work-04.webp",
+    src: "/images/vaulted-living-room-downlights.webp",
     rotation: 8,
-    alt: "TODO(alt): high-detail shot - describe the work and note what the detail shows",
+    alt: "Recessed downlights in a vaulted living room ceiling with roof windows",
     native: "1046 / 1270",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
-    src: "/images/work-05.webp",
+    src: "/images/dining-room-pendant-downlights.webp",
     rotation: -7,
-    alt: "TODO(alt): describe the work shown in this photograph",
+    alt: "Dining room with three pendant lights and recessed ceiling downlights",
     native: "1032 / 1166",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
-    src: "/images/work-06.webp",
-    alt: "TODO(alt): describe the work shown in this photograph",
+    src: "/images/house-exterior-lighting-night.webp",
+    alt: "Exterior lights illuminating a two-storey stone house at night",
     native: "1034 / 1148",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
@@ -202,9 +170,9 @@ export const ABOUT_GALLERY: GalleryImage[] = [
     zoom: 1.4,
   },
   {
-    src: "/images/about-01.webp",
+    src: "/images/kitchen-pendant-lights-breakfast-bar.webp",
     rotation: -0.5,
-    alt: "Photograph showing electrical work in progress",
+    alt: "Three glass pendant lights above a kitchen breakfast bar",
     native: "2484 / 1868",
     sizes: "(min-width: 1024px) 33vw, 100vw",
   },
@@ -216,22 +184,22 @@ export const ABOUT_GALLERY: GalleryImage[] = [
     sizes: "(min-width: 1024px) 33vw, 100vw",
   },
   {
-    src: "/images/about-04.webp",
+    src: "/images/green-kitchen-ceiling-downlights.webp",
     rotation: -2,
-    alt: "Completed electrical installation in a home",
+    alt: "Recessed ceiling downlights above green kitchen cabinets",
     native: "1422 / 1322",
     sizes: "(min-width: 1024px) 33vw, 100vw",
   },
   {
-    src: "/images/about-05.webp",
+    src: "/images/bathroom-recessed-ceiling-lights.webp",
     rotation: 7,
-    alt: "Electrical work being performed on-site",
+    alt: "White tiled bathroom with recessed ceiling lights and a corner bath",
     native: "1424 / 1686",
     sizes: "(min-width: 1024px) 33vw, 100vw",
   },
   {
-    src: "/images/about-06.webp",
-    alt: "Final inspection of completed electrical work",
+    src: "/images/rear-house-exterior-downlights.webp",
+    alt: "Exterior downlights illuminating the rear of a house at night",
     native: "1416 / 1638",
     sizes: "(min-width: 1024px) 33vw, 100vw",
   },
