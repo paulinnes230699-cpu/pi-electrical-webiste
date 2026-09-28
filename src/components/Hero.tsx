@@ -39,14 +39,18 @@ export default function Hero() {
         priority
         sizes="100vw"
         className="pointer-events-none -z-10 object-cover"
-        style={{ filter: "brightness(0.55) saturate(0.85)" }}
+        style={{ filter: "brightness(0.7) saturate(0.9)" }}
       />
+      {/* Scrim, not a second dimmer. Raised only as far as the copy allows: the
+          h1 sits over the darkest end of this ramp, so easing it is what
+          actually lets the photograph through. The alpha stays high enough at
+          0% to keep white-on-dark text well past AA. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(to right, rgba(10, 10, 10, 0.85) 0%, rgba(10, 10, 10, 0.74) 40%, rgba(10, 10, 10, 0.6) 70%, rgba(10, 10, 10, 0.5) 100%)"
+            "linear-gradient(to right, rgba(10, 10, 10, 0.74) 0%, rgba(10, 10, 10, 0.62) 40%, rgba(10, 10, 10, 0.48) 70%, rgba(10, 10, 10, 0.38) 100%)"
         }}
       ></div>
       {/* `shell` is the same container the header wordmark sits in, so the
