@@ -53,8 +53,9 @@ interface WorkCarouselProps {
  * ============================================================================
  * WORK CAROUSEL
  * ----------------------------------------------------------------------------
- * Six photographs of completed work, directly below the hero, advancing itself
- * one slide at a time.
+ * The photographs of completed work from WORK_GALLERY, directly below the hero,
+ * advancing itself one slide at a time. The count comes from the data, so
+ * adding a photograph needs no change here.
  *
  * ---------------------------------------------------------------------------
  * WHY IT ADVANCES ON DESKTOP TOO, WHEN QUICKACTIONS DOES NOT
@@ -70,8 +71,8 @@ interface WorkCarouselProps {
  * ---------------------------------------------------------------------------
  * The QuickActions indicators are `aria-hidden` and deliberately inert, which
  * is right for decorative tiles that are all already reachable by scrolling.
- * These are not: with six slides at one per view, the dots and the arrows are
- * the only affordance for jumping straight to slide 5. So they are <button>s
+ * These are not: with one slide per view, the dots and the arrows are the only
+ * affordance for jumping straight to a later slide. So they are <button>s
  * carrying aria-current, and the dot list is a labelled group.
  *
  * The arrows wrap rather than disabling at the ends, so a visitor who reaches
@@ -104,7 +105,8 @@ export default function WorkCarousel({
     className: headingClassName = "mb-10",
   } = heading ?? {};
 
-  /** 3.5s x 6 = a 21s loop, tighter than the 4s QuickActions uses for its five. */
+  /** At 3.5s a slide this loops every 28s across the eight current photographs,
+      tighter than the 4s QuickActions uses for its five. */
   const INTERVAL_MS = intervalMs;
 
   const headingId = `work-heading-${useId()}`;

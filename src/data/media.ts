@@ -171,6 +171,12 @@ export const WORK_GALLERY: GalleryImage[] = [
     native: "1034 / 1148",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
+  {
+    src: "/images/work-08.webp",
+    alt: "TODO(alt): describe the work shown, and note that the 4/5 frame crops about 14% off each side",
+    native: "1212 / 1076",
+    sizes: "(min-width: 1024px) 44vw, 92vw",
+  },
 ];
 
 export const ABOUT_GALLERY: GalleryImage[] = [
