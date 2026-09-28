@@ -17,6 +17,8 @@ export interface GalleryImage {
   sizes: string;
   /** object-position, only where the default centre crop is known to be wrong. */
   position?: string;
+  zoom?: number;
+  rotation?: number;
 }
 
 interface WorkCarouselProps {
@@ -210,11 +212,14 @@ export default function WorkCarousel({
                   /* object-cover does the cropping: work-01 is landscape and
                      the frame is portrait, so it loses most of its width. */
                   className="object-cover"
-                  style={
-                    image.position
-                      ? { objectPosition: image.position }
-                      : undefined
-                  }
+                  style={{
+                    objectPosition: image.position,
+                    // Scale enough to keep rotated corners outside the 4:5 frame.
+                    transform: image.rotation
+                      ? `rotate(${image.rotation}deg) scale(${Math.max(image.zoom ?? 1, Math.cos(Math.abs(image.rotation) * Math.PI / 180) + 1.25 * Math.sin(Math.abs(image.rotation) * Math.PI / 180))})`
+                      : image.zoom ? `scale(${image.zoom})` : undefined,
+                    transformOrigin: image.position,
+                  }}
                   sizes={image.sizes}
                   /* Never priority. This sits below the fold on every
                      viewport, and a priority image here would compete with the

@@ -13,12 +13,8 @@
  * ============================================================================
  */
 
-/**
- * TODO(BLOCKING): Production domain is not confirmed. Every canonical URL,
- * OpenGraph tag, sitemap entry and JSON-LD `url` derives from this value.
- * Replace with the real domain before launch, e.g. "https://pielectrical.co.uk".
- */
-export const SITE_URL = "https://www.pielectrical.example";
+/** Production origin shared by canonical URLs, metadata and the sitemap. */
+export const SITE_URL = "https://pi-electrical.com";
 
 export const BUSINESS = {
   name: "PI Electrical",

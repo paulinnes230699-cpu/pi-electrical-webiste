@@ -127,6 +127,8 @@ export interface GalleryImage {
   sizes: string;
   /** object-position, only where the default centre crop is known to be wrong. */
   position?: string;
+  zoom?: number;
+  rotation?: number;
 }
 
 /**
@@ -141,36 +143,42 @@ export interface GalleryImage {
 export const WORK_GALLERY: GalleryImage[] = [
   {
     src: "/images/work-08.webp",
+    rotation: -2,
     alt: "TODO(alt): describe the work shown, and note that the 4/5 frame crops about 14% off each side",
     native: "1212 / 1076",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
     src: "/images/work-stair-lights.png",
+    rotation: -6,
     alt: "Outdoor LED strip lighting installed on stone walls and steps at a residential property in Edinburgh",
     native: "1422 / 1622",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
     src: "/images/work-01.webp",
+    rotation: 1,
     alt: "TODO(alt): landscape shot, cropped hard in a 4/5 frame - describe the work and note the subject is centred",
     native: "1846 / 1384",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
     src: "/images/work-02.webp",
+    rotation: -1,
     alt: "TODO(alt): describe the work shown in this photograph",
     native: "1754 / 1376",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
     src: "/images/work-04.webp",
+    rotation: 8,
     alt: "TODO(alt): high-detail shot - describe the work and note what the detail shows",
     native: "1046 / 1270",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
     src: "/images/work-05.webp",
+    rotation: -7,
     alt: "TODO(alt): describe the work shown in this photograph",
     native: "1032 / 1166",
     sizes: "(min-width: 1024px) 44vw, 92vw",
@@ -185,31 +193,38 @@ export const WORK_GALLERY: GalleryImage[] = [
 
 export const ABOUT_GALLERY: GalleryImage[] = [
   {
+    src: "/images/about-pi-electrical-van.png",
+    alt: "PI Electrical van parked outside a large stone building",
+    native: "1408 / 1542",
+    sizes: "(min-width: 1024px) 33vw, 100vw",
+    // Keep the van at the left edge intact in the portrait carousel frame.
+    position: "left 12%",
+    zoom: 1.4,
+  },
+  {
     src: "/images/about-01.webp",
+    rotation: -0.5,
     alt: "Photograph showing electrical work in progress",
     native: "2484 / 1868",
     sizes: "(min-width: 1024px) 33vw, 100vw",
   },
   {
-    src: "/images/about-02.webp",
-    alt: "Electrician working on electrical panel",
-    native: "2488 / 1836",
-    sizes: "(min-width: 1024px) 33vw, 100vw",
-  },
-  {
-    src: "/images/about-03.webp",
-    alt: "Close-up of electrical wiring and connections",
+    src: "/images/about-kitchen-lighting.png",
+    rotation: -6,
+    alt: "Kitchen with recessed ceiling lights, under-cabinet lighting and illuminated plinths",
     native: "1412 / 1792",
     sizes: "(min-width: 1024px) 33vw, 100vw",
   },
   {
     src: "/images/about-04.webp",
+    rotation: -2,
     alt: "Completed electrical installation in a home",
     native: "1422 / 1322",
     sizes: "(min-width: 1024px) 33vw, 100vw",
   },
   {
     src: "/images/about-05.webp",
+    rotation: 7,
     alt: "Electrical work being performed on-site",
     native: "1424 / 1686",
     sizes: "(min-width: 1024px) 33vw, 100vw",
