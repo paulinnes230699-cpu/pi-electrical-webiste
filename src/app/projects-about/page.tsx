@@ -49,9 +49,9 @@ export default function ProjectsAboutPage() {
         intro={RANGE_STATEMENT}
         meta={
           <p className="max-w-[58ch] text-[0.9375rem] leading-relaxed text-muted">
-            {BUSINESS.name} is run by {BUSINESS.owner}, a fully qualified
-            electrician based in {BUSINESS.address.town}. Work is carried out
-            across {AREA_SUMMARY} and surrounding areas.
+{BUSINESS.name} is run by {BUSINESS.owner}, a fully qualified
+             electrician based in {BUSINESS.address.town}. Work is carried out
+             across {AREA_SUMMARY.join(", ")} and surrounding areas.
           </p>
         }
       >
@@ -96,31 +96,33 @@ export default function ProjectsAboutPage() {
 
               <div className="mt-8 flex flex-col gap-5 text-[0.9375rem] leading-relaxed text-muted sm:text-base">
                 <p>
-                  {BUSINESS.owner} has been a fully qualified electrician for
-                  over {BUSINESS.facts.fullyQualifiedYears} years, working across
-                  domestic and commercial electrical projects. {BUSINESS.name}{" "}
-                  is a small business on purpose: you speak to the person doing
-                  the work, not a call centre.
-                </p>
-                <p>
-                  Public liability insurance is held to {BUSINESS.facts.publicLiability}
-                  , and where certification is required for the electrical work
-                  completed, the relevant certificates are provided. Quotes are
-                  free and carry no obligation, and there is no job too small.
-                </p>
-                <p>
-                  The work spans everything from changing a socket through to
-                  full rewires, kitchen installations, extensions, new builds and
-                  commercial fit-outs, alongside fault finding, EICRs, PAT
-                  testing and emergency call-outs accepted day and night.
-                </p>
-                <p>
-                  Emergency attendance is subject to availability, and no fixed
-                  response time is promised - the site would rather be accurate
-                  than reassuring.
-                </p>
-              </div>
-            </div>
+{BUSINESS.owner} has been a fully qualified electrician for
+                   over {BUSINESS.facts.fullyQualifiedYears} years, working across
+                   domestic and commercial electrical projects. {BUSINESS.name}{" "}
+                   is a small business on purpose: you speak to the person doing
+                   the work, not a call centre.
+                 </p>
+                 <p>
+                   Public liability insurance is held to {BUSINESS.facts.publicLiability}
+                   , and where certification is required for the electrical work
+                   completed, the relevant certificates are provided. Quotes are
+                   free and carry no obligation, and there is no job too small.
+                 </p>
+                 <p>
+                   The work spans everything from changing a socket through to
+                   full rewires, kitchen installations, extensions, new builds and
+                   commercial fit-outs, alongside fault finding, EICRs, PAT
+                   testing and emergency call-outs accepted day and night.
+                 </p>
+                 <p>
+                   Emergency attendance is subject to availability, and no fixed
+                   response time is promised - the site would rather be accurate
+                   than reassuring.
+                 </p>
+               </div>
+             </div>
+
+           {/* About Carousel */}
 
 {/* About Carousel */}
               <div className="lg:col-span-6">
