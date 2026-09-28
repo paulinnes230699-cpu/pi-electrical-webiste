@@ -138,37 +138,76 @@ export const WORK_GALLERY: GalleryImage[] = [
   {
     src: "/images/work-01.webp",
     alt: "TODO(alt): landscape shot, cropped hard in a 4/5 frame - describe the work and note the subject is centred",
-    native: "1600 / 1181",
+    native: "1846 / 1384",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
     src: "/images/work-02.webp",
     alt: "TODO(alt): describe the work shown in this photograph",
-    native: "1313 / 1600",
+    native: "1754 / 1376",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
     src: "/images/work-03.webp",
     alt: "TODO(alt): describe the work shown in this photograph",
-    native: "1253 / 1600",
+    native: "1042 / 996",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
     src: "/images/work-04.webp",
     alt: "TODO(alt): high-detail shot - describe the work and what the detail shows",
-    native: "1416 / 1572",
+    native: "1046 / 1270",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
     src: "/images/work-05.webp",
     alt: "TODO(alt): describe the work shown in this photograph",
-    native: "1369 / 1600",
+    native: "1032 / 1166",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
     src: "/images/work-06.webp",
     alt: "TODO(alt): describe the work shown in this photograph",
-    native: "1404 / 1564",
+    native: "1034 / 1148",
     sizes: "(min-width: 1024px) 44vw, 92vw",
+  },
+];
+
+export const ABOUT_GALLERY: GalleryImage[] = [
+  {
+    src: "/images/about-01.webp",
+    alt: "Photograph showing electrical work in progress",
+    native: "2484 / 1868",
+    sizes: "(min-width: 1024px) 33vw, 100vw",
+  },
+  {
+    src: "/images/about-02.webp",
+    alt: "Electrician working on electrical panel",
+    native: "2488 / 1836",
+    sizes: "(min-width: 1024px) 33vw, 100vw",
+  },
+  {
+    src: "/images/about-03.webp",
+    alt: "Close-up of electrical wiring and connections",
+    native: "2526 / 1842",
+    sizes: "(min-width: 1024px) 33vw, 100vw",
+  },
+  {
+    src: "/images/about-04.webp",
+    alt: "Completed electrical installation in a home",
+    native: "1422 / 1322",
+    sizes: "(min-width: 1024px) 33vw, 100vw",
+  },
+  {
+    src: "/images/about-05.webp",
+    alt: "Electrical work being performed on-site",
+    native: "1424 / 1686",
+    sizes: "(min-width: 1024px) 33vw, 100vw",
+  },
+  {
+    src: "/images/about-06.webp",
+    alt: "Final inspection of completed electrical work",
+    native: "1416 / 1638",
+    sizes: "(min-width: 1024px) 33vw, 100vw",
   },
 ];

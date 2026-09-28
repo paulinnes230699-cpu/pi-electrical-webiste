@@ -7,7 +7,8 @@ import Reveal from "@/components/Reveal";
 import Button from "@/components/Button";
 import ReviewsGrid from "@/components/ReviewsGrid";
 import FinalCta from "@/components/FinalCta";
-import { MEDIA } from "@/data/media";
+import WorkCarousel from "@/components/WorkCarousel";
+import { MEDIA, ABOUT_GALLERY } from "@/data/media";
 import { BUSINESS, TRUST_FACTS, SECONDARY_TRUST_FACTS } from "@/data/business";
 import TrustMarquee from "@/components/TrustMarquee";
 import { AREA_SUMMARY } from "@/data/areas";
@@ -127,33 +128,16 @@ export default function ProjectsAboutPage() {
               </p>
             </div>
 
-            {/* Photograph slots */}
-            <div className="lg:col-span-6">
-              <Reveal>
-                <MediaSlot
-                  slot={MEDIA.aboutPrimary}
-                  className="w-full"
-                  sizes="(min-width: 1024px) 46vw, 100vw"
-                />
-              </Reveal>
-              <div className="mt-5 grid grid-cols-2 gap-5">
-                <Reveal delay={80}>
-                  <MediaSlot
-                    slot={MEDIA.aboutSecondary}
-                    sizes="(min-width: 1024px) 22vw, 45vw"
-                  />
-                </Reveal>
-                <Reveal delay={160}>
-                  <MediaSlot
-                    slot={MEDIA.emergency}
-                    sizes="(min-width: 1024px) 22vw, 45vw"
-                  />
-                </Reveal>
-              </div>
-              <p className="mt-4 text-sm leading-relaxed text-muted">
-                Photographs of {BUSINESS.owner} and recent work are being added.
-              </p>
-            </div>
+{/* About Carousel */}
+             <div className="lg:col-span-6">
+               <WorkCarousel
+                 images={ABOUT_GALLERY}
+                 heading={{
+                   eyebrow: "About",
+                   title: "Straight answers, tidy work, and no surprises on the invoice"
+                 }}
+               />
+             </div>
           </div>
         </div>
       </section>

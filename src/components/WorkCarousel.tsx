@@ -6,6 +6,31 @@ import { cx } from "@/lib/cx";
 import SectionHeading from "./SectionHeading";
 import { WORK_GALLERY } from "@/data/media";
 
+export interface GalleryImage {
+  src: string;
+  /** See the alt-text warning above. Replace before this ships to customers. */
+  alt: string;
+  /** Native ratio of the source file, recorded so the crop is not a surprise. */
+  native: string;
+  /** sizes attribute for the responsive srcset. */
+  sizes: string;
+  /** object-position, only where the default centre crop is known to be wrong. */
+  position?: string;
+}
+
+interface WorkCarouselProps {
+  images?: GalleryImage[];
+  heading?: {
+    eyebrow?: string;
+    title?: string;
+    intro?: string;
+    className?: string;
+  };
+  intervalMs?: number;
+  showControls?: boolean;
+  className?: string;
+}
+
 /**
  * ============================================================================
  * WORK CAROUSEL
@@ -44,12 +69,26 @@ import { WORK_GALLERY } from "@/data/media";
  * ============================================================================
  */
 
-/** 3.5s x 6 = a 21s loop, tighter than the 4s QuickActions uses for its five. */
-const INTERVAL_MS = 3500;
+export default function WorkCarousel({
+  images,
+  heading,
+  intervalMs = 3500,
+  showControls = true,
+  className,
+}: WorkCarouselProps = {}) {
+  const imageList = images ?? WORK_GALLERY;
+  const {
+    eyebrow = "Recent work",
+    title = "Electrical work across homes & businesses",
+    intro = "A selection of recent projects completed across Edinburgh, the Lothians and Fife.",
+    className: headingClassName = "mb-10",
+  } = heading ?? {};
 
-export default function WorkCarousel() {
+  /** 3.5s x 6 = a 21s loop, tighter than the 4s QuickActions uses for its five. */
+  const INTERVAL_MS = intervalMs;
+
   const { ref, index, goTo, next, prev, stop } = useAutoAdvance<HTMLUListElement>({
-    count: WORK_GALLERY.length,
+    count: imageList.length,
     interval: INTERVAL_MS,
     maxWidth: ALL_WIDTHS,
     loop: true,
@@ -58,23 +97,23 @@ export default function WorkCarousel() {
   return (
     <section
       aria-labelledby="work-heading"
-      className="border-b border-line bg-warm"
+      className={cx("border-b border-line bg-warm", className)}
     >
       <div className="shell py-16 sm:py-24">
-<SectionHeading
-  id="work-heading"
-  eyebrow="Recent work"
-  title="Electrical work across homes & businesses"
-  intro="A selection of recent projects completed across Edinburgh, the Lothians and Fife."
-  className="mb-10"
-/>
+        <SectionHeading
+          id="work-heading"
+          eyebrow={eyebrow}
+          title={title}
+          intro={intro}
+          className={headingClassName}
+        />
 
         {/*
-          The scroller. Same interaction contract as QuickActions: any pointer,
-          touch, focus, wheel or key event means the visitor has taken over, so
-          the loop stops permanently and never resumes. See lib/auto-advance.ts
-          for why that is a stop rather than a pause.
-        */}
+           The scroller. Same interaction contract as QuickActions: any pointer,
+           touch, focus, wheel or key event means the visitor has taken over, so
+           the loop stops permanently and never resumes. See lib/auto-advance.ts
+           for why that is a stop rather than a pause.
+         */}
         <ul
           ref={ref}
           data-work-carousel
@@ -88,7 +127,7 @@ export default function WorkCarousel() {
             "px-5 pb-2 sm:-mx-6 sm:px-6",
           )}
         >
-          {WORK_GALLERY.map((image, i) => (
+          {imageList.map((image, i) => (
             <li
               key={image.src}
               data-work-slide
@@ -129,17 +168,17 @@ export default function WorkCarousel() {
                   quality={75}
                 />
               </div>
-            </li>
-          ))}
+</li>
+           ))}
 
           {/*
-            Looping runway: two copies of the first photographs at the tail, so
-            the arrows can step continuously past slide 6 and come back to
-            slide 1 without grinding to a dead end. These are hidden from
-            assistive tech because they are identical to the originals; the
-            visitor sees the same photo as the loop turns over.
-          */}
-          {WORK_GALLERY.slice(0, 2).map((image) => (
+             Looping runway: two copies of the first photographs at the tail, so
+             the arrows can step continuously past slide 6 and come back to
+             slide 1 without grinding to a dead end. These are hidden from
+             assistive tech because they are identical to the originals; the
+             visitor sees the same photo as the loop turns over.
+           */}
+          {imageList.slice(0, 2).map((image) => (
             <li
               key={image.src + "-runway"}
               data-work-slide
@@ -168,91 +207,79 @@ export default function WorkCarousel() {
           ))}
         </ul>
 
-        {/*
-          Controls: arrows either side of the position dots.
+        {showControls && (
+          <div className="mt-6 flex items-center justify-center gap-3 sm:gap-4">
+            <button
+              type="button"
+              data-work-prev
+              onClick={prev}
+              aria-label="Previous photograph"
+              className={cx(
+                "grid h-11 w-11 shrink-0 place-items-center rounded-full",
+                "border border-line bg-white text-lg leading-none text-ink",
+                "transition-colors duration-200",
+                "hover:border-black hover:bg-black hover:text-white",
+                "active:bg-black active:text-white",
+              )}
+            >
+              <span aria-hidden="true">←</span>
+            </button>
 
-          The arrows are buttons, not decoration, and they are labelled with the
-          destination rather than the glyph. Neither can ever be disabled,
-          because the strip wraps: "previous" from the first slide is the last
-          one, and "next" from the last is the first. A dead arrow at either end
-          would imply a hard stop that does not exist.
-
-          They deliberately do NOT stop the auto-advance loop, the same as the
-          dots: pressing an arrow is deliberate navigation, not the visitor
-          grabbing the strip mid-slide. They also sit outside the <ul>, so
-          pressing one does not trip the stop handlers wired to the slides.
-        */}
-        <div className="mt-6 flex items-center justify-center gap-3 sm:gap-4">
-          <button
-            type="button"
-            data-work-prev
-            onClick={prev}
-            aria-label="Previous photograph"
-            className={cx(
-              "grid h-11 w-11 shrink-0 place-items-center rounded-full",
-              "border border-line bg-white text-lg leading-none text-ink",
-              "transition-colors duration-200",
-              "hover:border-black hover:bg-black hover:text-white",
-              "active:bg-black active:text-white",
-            )}
-          >
-            <span aria-hidden="true">←</span>
-          </button>
-
-          {/*
-            Indicator buttons. Labelled as a group so the count is announced, and
-            each carries an explicit target rather than a bare position, since
-            the positions alone ("3") mean nothing out of context.
-          */}
-          <div
-            role="group"
-            aria-label={`Choose a photograph, ${WORK_GALLERY.length} in total`}
-            data-work-dots
-            className="flex items-center justify-center gap-2"
-          >
-            {WORK_GALLERY.map((image, dot) => (
-              <button
-                key={image.src}
-                type="button"
-                data-work-dot
-                data-active={dot === index ? "true" : undefined}
-                aria-current={dot === index ? "true" : undefined}
-                aria-label={`Photograph ${dot + 1} of ${WORK_GALLERY.length}`}
-                onClick={() => goTo(dot)}
-                className={cx(
-                  "rounded-full p-1 transition-all duration-300",
-                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
-                )}
-              >
-                <span
-                  aria-hidden="true"
+            {/*
+               Indicator buttons. Labelled as a group so the count is announced, and
+               each carries an explicit target rather than a bare position, since
+               the positions alone ("3") mean nothing out of context.
+             */}
+            <div
+              role="group"
+              aria-label={`Choose a photograph, ${imageList.length} in total`}
+              data-work-dots
+              className="flex items-center justify-center gap-2"
+            >
+              {imageList.map((image, dot) => (
+                <button
+                  key={image.src}
+                  type="button"
+                  data-work-dot
+                  data-active={dot === index ? "true" : undefined}
+                  aria-current={dot === index ? "true" : undefined}
+                  aria-label={`Photograph ${dot + 1} of ${imageList.length}`}
+                  onClick={() => goTo(dot)}
                   className={cx(
-                    "block rounded-full transition-all duration-300",
-                    dot === index
-                      ? "h-1.5 w-5 bg-[#2a2a2a]"
-                      : "h-1.5 w-1.5 bg-white/25",
+                    "rounded-full p-1 transition-all duration-300",
+                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
                   )}
-                />
-              </button>
-            ))}
-          </div>
+                >
+                  <span
+                    aria-hidden="true"
+                    className={cx(
+                      "block rounded-full transition-all duration-300",
+                      dot === index
+                        ? "h-1.5 w-5 bg-[#2a2a2a]"
+                        : "h-1.5 w-1.5 bg-white/25",
+                    )}
+                  />
+                </button>
+              ))}
+            </div>
 
-          <button
-            type="button"
-            data-work-next
-            onClick={next}
-            aria-label="Next photograph"
-            className={cx(
-              "grid h-11 w-11 shrink-0 place-items-center rounded-full",
-              "border border-line bg-white text-lg leading-none text-ink",
-              "transition-colors duration-200",
-              "hover:border-black hover:bg-black hover:text-white",
-              "active:bg-black active:text-white",
-            )}
-          >
-            <span aria-hidden="true">→</span>
-          </button>
-        </div>
+            <button
+              type="button"
+              data-work-next
+              onClick={next}
+              aria-label="Next photograph"
+              className={cx(
+                "grid h-11 w-11 shrink-0 place-items-center rounded-full",
+                "border border-line bg-white text-lg leading-none text-ink",
+                "transition-colors duration-200",
+                "hover:border-black hover:bg-black hover:text-white",
+                "active:bg-black active:text-white",
+              )}
+            >
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
