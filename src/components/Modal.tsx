@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { cx } from "@/lib/cx";
+import { useHydrated } from "@/lib/use-hydrated";
 import {
   bindOverlayKeys,
   captureFocus,
@@ -31,22 +32,8 @@ import {
  */
 
 /**
- * "Have we hydrated yet?", without a setState-in-effect.
- *
- * The portal can only be created in the browser, but the server must not
- * render it or hydration mismatches. useSyncExternalStore with an empty
- * subscribe and a server snapshot of `false` is the supported way to express
- * exactly that, and unlike a mount effect it does not schedule a second render.
+ * "Have we hydrated yet?", without a setState-in-effect. See lib/use-hydrated.
  */
-const neverChanges = () => () => {};
-function useHydrated() {
-  return useSyncExternalStore(
-    neverChanges,
-    () => true,
-    () => false,
-  );
-}
-
 export default function Modal({
   open,
   onClose,
