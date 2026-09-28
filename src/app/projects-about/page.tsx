@@ -129,15 +129,20 @@ export default function ProjectsAboutPage() {
             </div>
 
 {/* About Carousel */}
-             <div className="lg:col-span-6">
-               <WorkCarousel
-                 images={ABOUT_GALLERY}
-                 heading={{
-                   eyebrow: "About",
-                   title: "Straight answers, tidy work, and no surprises on the invoice"
-                 }}
-               />
-             </div>
+              <div className="lg:col-span-6">
+                {/*
+                  No heading on the carousel: the column beside it already
+                  carries the "About / Straight answers, tidy work" heading, and
+                  rendering it again put the same title twice on one page. The
+                  carousel's own default copy also described these photographs as
+                  "a selection of recent projects", which they are not.
+                */}
+                <WorkCarousel
+                  images={ABOUT_GALLERY}
+                  showHeading={false}
+                  label="Photographs of PI Electrical at work"
+                />
+              </div>
           </div>
         </div>
       </section>

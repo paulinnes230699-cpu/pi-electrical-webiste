@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import Image from "next/image";
 import { useAutoAdvance, ALL_WIDTHS } from "@/lib/auto-advance";
 import { cx } from "@/lib/cx";
@@ -26,6 +27,23 @@ interface WorkCarouselProps {
     intro?: string;
     className?: string;
   };
+  /**
+   * Render the heading above the strip. True by default, which is right for the
+   * homepage carousel - it is the only thing on the page naming the strip.
+   *
+   * Set false when the carousel is embedded in a section that already has its
+   * own heading in a sibling column, as the About section does. Without it the
+   * same title renders twice on one page, and the duplicate is worse than
+   * useless: the carousel's default copy also calls its photographs "a selection
+   * of recent projects", which is wrong for the About photographs.
+   */
+  showHeading?: boolean;
+  /**
+   * Accessible name for the section, used only when `showHeading` is false.
+   * Required in that case, because the section is then no longer named by a
+   * visible heading and `aria-labelledby` would point at nothing.
+   */
+  label?: string;
   intervalMs?: number;
   showControls?: boolean;
   className?: string;
@@ -72,6 +90,8 @@ interface WorkCarouselProps {
 export default function WorkCarousel({
   images,
   heading,
+  showHeading = true,
+  label,
   intervalMs = 3500,
   showControls = true,
   className,
@@ -87,6 +107,8 @@ export default function WorkCarousel({
   /** 3.5s x 6 = a 21s loop, tighter than the 4s QuickActions uses for its five. */
   const INTERVAL_MS = intervalMs;
 
+  const headingId = `work-heading-${useId()}`;
+
   const { ref, index, goTo, next, prev, stop } = useAutoAdvance<HTMLUListElement>({
     count: imageList.length,
     interval: INTERVAL_MS,
@@ -96,17 +118,26 @@ export default function WorkCarousel({
 
   return (
     <section
-      aria-labelledby="work-heading"
+      /* The id is generated rather than hard-coded, so a second carousel on the
+         same page cannot produce a duplicate "work-heading". Named by the
+         visible heading when there is one, and by `label` when there is not -
+         a dangling aria-labelledby names nothing and leaves the section
+         unnamed in the accessibility tree. */
+      {...(showHeading
+        ? { "aria-labelledby": headingId }
+        : { "aria-label": label ?? "Image carousel" })}
       className={cx("border-b border-line bg-warm", className)}
     >
       <div className="shell py-16 sm:py-24">
-        <SectionHeading
-          id="work-heading"
-          eyebrow={eyebrow}
-          title={title}
-          intro={intro}
-          className={headingClassName}
-        />
+        {showHeading && (
+          <SectionHeading
+            id={headingId}
+            eyebrow={eyebrow}
+            title={title}
+            intro={intro}
+            className={headingClassName}
+          />
+        )}
 
         {/*
            The scroller. Same interaction contract as QuickActions: any pointer,
