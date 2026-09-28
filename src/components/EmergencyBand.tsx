@@ -18,7 +18,7 @@ export default function EmergencyBand() {
       className="relative overflow-hidden bg-[#1a1a1a] text-white"
     >
       <div className="shell relative py-16 sm:py-24">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
             <p className="eyebrow flex items-center gap-2.5 text-white">
               <span

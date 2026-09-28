@@ -24,7 +24,7 @@ export default function Footer() {
   return (
     <footer className="on-dark bg-black text-white">
       <div className="shell pb-10 pt-16 sm:pt-20">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-4">
             <BrandLink>

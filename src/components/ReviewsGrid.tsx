@@ -32,7 +32,14 @@ export default function ReviewsGrid({
         </div>
       ) : null}
 
-      <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto no-scrollbar px-1 pb-4 md:columns-2 md:overflow-visible md:gap-5 lg:gap-6">
+      {/* Below md this is a horizontal snap carousel. At md it must stop being a
+          flex container: `columns-2` is a no-op on a flex box, so previously
+          the only thing md changed was `overflow-visible`, which unclipped the
+          row while the children stayed `shrink-0` - all four cards laid out in
+          one ~6400px line with none of them on screen. `md:block` makes the
+          column count real, and the children already carry `md:w-auto` and
+          `md:break-inside-avoid`. */}
+      <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto no-scrollbar px-1 pb-4 md:block md:columns-2 md:overflow-visible md:gap-5 lg:gap-6">
         {reviews.map((review, i) => (
           <Reveal
             key={review.id}

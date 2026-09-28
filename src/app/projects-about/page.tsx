@@ -86,7 +86,7 @@ export default function ProjectsAboutPage() {
       {/* ---------------------------------------------------------------- */}
       <section aria-labelledby="about-heading" className="bg-warm">
         <div className="shell py-16 sm:py-24">
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-6">
               <SectionHeading
                 id="about-heading"

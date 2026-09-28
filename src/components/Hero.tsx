@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { BUSINESS, HERO_INTRO } from "@/data/business";
 import Button from "./Button";
 
@@ -21,18 +22,25 @@ export default function Hero() {
     >
       {/* The photo is dimmed on its own layer. A filter on the section itself
           would darken every descendant too, including the text, so the
-          background and the copy are kept in separate stacking contexts. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          backgroundImage: "url('/images/hero-page-pielectricals.webp')",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          filter: "brightness(0.55) saturate(0.85)"
-        }}
-      ></div>
+          background and the copy are kept in separate stacking contexts.
+
+          Served through next/image rather than a CSS background-image: the
+          background-image version bypassed the optimiser entirely, so every
+          device downloaded the full 1672x941 file (343KB) with no srcset, no
+          preload and no format negotiation. `fill` + `object-cover` reproduces
+          `background-size: cover`, and `object-position` already defaults to
+          center, so the framing is unchanged. `priority` makes this the preloaded
+          LCP element. The gradient below follows in DOM order and still
+          overlays the photo. */}
+      <Image
+        src="/images/hero-page-pielectricals.webp"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="pointer-events-none -z-10 object-cover"
+        style={{ filter: "brightness(0.55) saturate(0.85)" }}
+      />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10"
@@ -41,8 +49,15 @@ export default function Hero() {
             "linear-gradient(to right, rgba(10, 10, 10, 0.85) 0%, rgba(10, 10, 10, 0.74) 40%, rgba(10, 10, 10, 0.6) 70%, rgba(10, 10, 10, 0.5) 100%)"
         }}
       ></div>
-      <div className="relative max-w-[1400px] px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-24 lg:py-28 xl:py-32">
-        <div className="max-w-[720px] pl-6">
+      {/* `shell` is the same container the header wordmark sits in, so the
+          heading lines up with the header at every width. The previous bespoke
+          max-w-[1400px] wrapper had no mx-auto, so above 1400px the copy
+          drifted left of the header by the difference.
+          `-ml-1` repeats the optical nudge BrandLink applies to the round
+          mark, putting the text on the same rail as the visible logo rather
+          than the link's padding box. */}
+      <div className="shell relative py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
+        <div className="max-w-[720px] -ml-1">
           <div className="flex flex-col gap-8">
             {/* Eyebrow */}
             <p
@@ -63,7 +78,7 @@ export default function Hero() {
               className="font-display font-extrabold tracking-[-0.03em] leading-[0.95] max-w-[900px]"
               style={{
                 textShadow: "0 2px 28px rgba(0,0,0,0.8), 0 1px 3px rgba(0,0,0,0.6)",
-                fontSize: "clamp(40px, 5vw, 68px)",
+                fontSize: "clamp(34px, 4vw, 52px)",
                 color: "#FFFFFF"
               }}
             >

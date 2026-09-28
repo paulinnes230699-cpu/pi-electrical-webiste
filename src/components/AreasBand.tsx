@@ -20,7 +20,7 @@ export default function AreasBand() {
       className="border-y border-line bg-white"
     >
       <div className="shell py-16 sm:py-24">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-4">
             <p className="eyebrow flex items-center gap-2.5 text-foreground">
               <span aria-hidden="true" className="h-px w-6 bg-[#555555]/40" />
