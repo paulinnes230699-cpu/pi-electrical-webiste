@@ -10,7 +10,7 @@ and regenerates the XML on every production build (`npm run build`). Add a page
 and rebuild/deploy to include it automatically. Production serves the generated
 XML without needing access to source files. `robots.txt` advertises the sitemap.
 
-URLs use `https://pi-electrical.com` from `src/data/business.ts`. Each entry has
+URLs use `https://www.pi-electrical.com` from `src/data/business.ts`. Each entry has
 `loc`, `lastmod`, `changefreq` and `priority`. `lastmod` uses the page source file's
 modification time (checkout times may affect this); changes only to imported
 content are not reflected in that timestamp.

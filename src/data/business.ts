@@ -14,7 +14,7 @@
  */
 
 /** Production origin shared by canonical URLs, metadata and the sitemap. */
-export const SITE_URL = "https://pi-electrical.com";
+export const SITE_URL = "https://www.pi-electrical.com";
 
 export const BUSINESS = {
   name: "PI Electrical",
