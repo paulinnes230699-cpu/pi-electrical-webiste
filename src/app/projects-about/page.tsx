@@ -120,12 +120,6 @@ export default function ProjectsAboutPage() {
                   than reassuring.
                 </p>
               </div>
-
-              <p className="mt-10 text-sm leading-relaxed text-muted">
-                Exact qualification and certificate names are not published
-                because they have not yet been confirmed - they are available on
-                request.
-              </p>
             </div>
 
 {/* About Carousel */}
@@ -205,7 +199,7 @@ export default function ProjectsAboutPage() {
             id="projects-heading"
             eyebrow="Completed work"
             title="Recent projects"
-            intro="Domestic and commercial work, with before-and-after comparisons where they are available."
+            intro="Domestic and commercial work from across Edinburgh, the Lothians and Fife."
             className="mb-12"
           />
           <ProjectGallery />
