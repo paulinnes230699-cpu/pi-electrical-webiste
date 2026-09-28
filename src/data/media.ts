@@ -129,7 +129,22 @@ export interface GalleryImage {
   position?: string;
 }
 
+/**
+ * Order matters: slide 1 is what a visitor sees on arrival, before the loop
+ * takes over, and it is the frame that gets scrolled past first. work-08 leads
+ * because it reads as the strongest single piece of work; the stair-lights
+ * photograph is a close second and follows it.
+ *
+ * The order is a pure rotation - move the last entry to the front and the rest
+ * shift up - so reordering is a cut and paste here, with no other change.
+ */
 export const WORK_GALLERY: GalleryImage[] = [
+  {
+    src: "/images/work-08.webp",
+    alt: "TODO(alt): describe the work shown, and note that the 4/5 frame crops about 14% off each side",
+    native: "1212 / 1076",
+    sizes: "(min-width: 1024px) 44vw, 92vw",
+  },
   {
     src: "/images/work-stair-lights.png",
     alt: "Outdoor LED strip lighting installed on stone walls and steps at a residential property in Edinburgh",
@@ -150,7 +165,7 @@ export const WORK_GALLERY: GalleryImage[] = [
   },
   {
     src: "/images/work-04.webp",
-    alt: "TODO(alt): high-detail shot - describe the work and what the detail shows",
+    alt: "TODO(alt): high-detail shot - describe the work and note what the detail shows",
     native: "1046 / 1270",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
@@ -164,12 +179,6 @@ export const WORK_GALLERY: GalleryImage[] = [
     src: "/images/work-06.webp",
     alt: "TODO(alt): describe the work shown in this photograph",
     native: "1034 / 1148",
-    sizes: "(min-width: 1024px) 44vw, 92vw",
-  },
-  {
-    src: "/images/work-08.webp",
-    alt: "TODO(alt): describe the work shown, and note that the 4/5 frame crops about 14% off each side",
-    native: "1212 / 1076",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
 ];
