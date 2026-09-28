@@ -106,13 +106,14 @@ export type MediaKey = keyof typeof MEDIA;
  * ---------------------------------------------------------------------------
  * WORK-01 IS LANDSCAPE IN A PORTRAIT FRAME
  * ---------------------------------------------------------------------------
- * work-01 is 1600x1181 (1.355 landscape); the other six are 0.78-0.90
- * portrait. The carousel frame is a uniform 4/5, so this one is object-cover
- * cropped and loses roughly 59% of its width. That was a conscious decision -
- * keeping all seven beat dropping to six for ratio consistency - but the crop
- * point is centre, because it was not possible to see where the subject sits.
- * If the subject gets cut, `objectPosition` on that entry is the fix, and it
- * is the one field here that most needs a human eye.
+ * Three of the seven are landscape: work-01 (1846x1384, 1.33), work-02
+ * (1754x1376, 1.28) and work-08 (1212x1076, 1.13). The other four are portrait,
+ * 0.82-0.90. The carousel frame is a uniform 4/5, so the landscape ones are
+ * object-cover cropped and lose 40%, 37% and 29% of their width respectively;
+ * the portrait ones lose 3-11%. Keeping all seven beat dropping any for ratio
+ * consistency, but the crop point is centre, because it was not possible to see
+ * where the subject sits. If a subject gets cut, `objectPosition` on that entry
+ * is the fix, and it is the one field here that most needs a human eye.
  * ============================================================================
  */
 
@@ -132,7 +133,7 @@ export const WORK_GALLERY: GalleryImage[] = [
   {
     src: "/images/work-stair-lights.png",
     alt: "Outdoor LED strip lighting installed on stone walls and steps at a residential property in Edinburgh",
-    native: "1440 / 1800",
+    native: "1422 / 1622",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
@@ -145,12 +146,6 @@ export const WORK_GALLERY: GalleryImage[] = [
     src: "/images/work-02.webp",
     alt: "TODO(alt): describe the work shown in this photograph",
     native: "1754 / 1376",
-    sizes: "(min-width: 1024px) 44vw, 92vw",
-  },
-  {
-    src: "/images/work-03.webp",
-    alt: "TODO(alt): describe the work shown in this photograph",
-    native: "1042 / 996",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {

@@ -92,8 +92,8 @@ interface WorkCarouselProps {
  *
  * So the copies are gone and the wrap is an un-animated cut instead, with a
  * longer dwell on the last slide so the jump reads as a new cycle. Every
- * photograph is now shown exactly once, and the DOM is eight slides for eight
- * photographs.
+ * photograph is now shown exactly once, and the DOM is one node per
+ * photograph.
  * ---------------------------------------------------------------------------
  * ALT TEXT IS CURRENTLY TODO
  * ---------------------------------------------------------------------------
@@ -121,9 +121,9 @@ export default function WorkCarousel({
     className: headingClassName = "mb-10",
   } = heading ?? {};
 
-  /** At 3.5s a slide this takes about 31.5s round the eight current
-      photographs - seven steps plus the longer dwell on the last one - tighter
-      than the 4s QuickActions uses for its five. */
+  /** At 3.5s a slide this takes about 28s round the seven current photographs -
+      six steps plus the longer dwell on the last one - tighter than the 4s
+      QuickActions uses for its five. */
   const INTERVAL_MS = intervalMs;
 
   /** Extra beat on the final photograph before the loop cuts back to the first,
