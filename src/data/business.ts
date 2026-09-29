@@ -122,7 +122,7 @@ export const BUSINESS = {
  * qualifications are the reassurance that follows.
  */
 export const HERO_INTRO =
-  "From small repairs and socket changes to full rewires, kitchen electrics, home renovations and commercial projects, all work is carried out directly by Paul at PI Electrical.";
+  "From small repairs and socket changes to full rewires, kitchen electrics, home renovations and commercial projects, Paul at PI Electrical carries out all work directly. Based in Bonnyrigg, he serves homes and businesses across Edinburgh, the Lothians and Fife.";
 
 /** Short trust facts used in the strip and badges. Verified only. */
 export const TRUST_FACTS = [
