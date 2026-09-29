@@ -35,7 +35,7 @@ export type AnalyticsEvent =
  */
 export type AnalyticsContext = {
   /** Which surface triggered it, e.g. "hero", "mobile_bar", "footer". */
-  location: "floating_whatsapp" | "hero" | "quote_panel" | "header" | "footer" | "mobile_bar" | "services" | "projects" | "emergency" | "membership" | "final_cta" | "services_page" | "projects_page" | "home" | "not_found";
+  location: "floating_social" | "floating_whatsapp" | "hero" | "quote_panel" | "header" | "footer" | "mobile_bar" | "services" | "projects" | "emergency" | "membership" | "final_cta" | "services_page" | "projects_page" | "home" | "not_found";
   /** Which button or link, e.g. "primary", "secondary", "call", "whatsapp". */
   action: string;
   /** A service slug from data/services.ts, when relevant. Never free text. */
