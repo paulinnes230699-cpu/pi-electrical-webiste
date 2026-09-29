@@ -20,37 +20,24 @@ export default function Hero() {
       className="hero-entrance relative isolate overflow-hidden pt-header"
       style={{ backgroundColor: "#1C1C1C" }}
     >
-      {/* The photo is dimmed on its own layer. A filter on the section itself
-          would darken every descendant too, including the text, so the
-          background and the copy are kept in separate stacking contexts.
-
-          Served through next/image rather than a CSS background-image: the
-          background-image version bypassed the optimiser entirely, so every
-          device downloaded the full 1672x941 file (343KB) with no srcset, no
-          preload and no format negotiation. `fill` + `object-cover` reproduces
-          `background-size: cover`, and `object-position` already defaults to
-          center, so the framing is unchanged. `priority` makes this the preloaded
-          LCP element. The gradient below follows in DOM order and still
-          overlays the photo. */}
+      {/* Serve the original 343KB WebP: this tall cover image can otherwise
+          stretch a viewport-width mobile variant well beyond its resolution. */}
       <Image
         src="/images/hero-page-pielectricals.webp"
         alt=""
         fill
-        priority
+        preload
+        unoptimized
         sizes="100vw"
         className="hero-entrance-image pointer-events-none -z-10 object-cover"
-        style={{ filter: "brightness(0.7) saturate(0.9)" }}
       />
-      {/* Scrim, not a second dimmer. Raised only as far as the copy allows: the
-          h1 sits over the darkest end of this ramp, so easing it is what
-          actually lets the photograph through. The alpha stays high enough at
-          0% to keep white-on-dark text well past AA. */}
+      {/* Keep contrast behind the copy while letting the photo show on the right. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(to right, rgba(10, 10, 10, 0.74) 0%, rgba(10, 10, 10, 0.62) 40%, rgba(10, 10, 10, 0.48) 70%, rgba(10, 10, 10, 0.38) 100%)"
+            "linear-gradient(to right, rgba(10, 10, 10, 0.78) 0%, rgba(10, 10, 10, 0.68) 40%, rgba(10, 10, 10, 0.32) 70%, rgba(10, 10, 10, 0.16) 100%)"
         }}
       ></div>
       {/* `shell` is the same container the header wordmark sits in, so the
