@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageBanner from "@/components/PageBanner";
 import ProjectGallery from "@/components/ProjectGallery";
+import CommunitySponsorships from "@/components/CommunitySponsorships";
 import SectionHeading from "@/components/SectionHeading";
 import MediaSlot from "@/components/MediaSlot";
 import Reveal from "@/components/Reveal";
@@ -195,6 +196,8 @@ export default function ProjectsAboutPage() {
       {/* ---------------------------------------------------------------- */}
       {/* Gallery                                                            */}
       {/* ---------------------------------------------------------------- */}
+      <CommunitySponsorships />
+
       <section aria-labelledby="projects-heading" className="bg-warm">
         <div className="shell py-16 sm:py-24">
           <SectionHeading
