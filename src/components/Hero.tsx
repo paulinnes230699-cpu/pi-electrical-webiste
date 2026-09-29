@@ -17,7 +17,7 @@ export default function Hero() {
     <section
       aria-labelledby="hero-heading"
       data-first-section
-      className="relative isolate overflow-hidden pt-header"
+      className="hero-entrance relative isolate overflow-hidden pt-header"
       style={{ backgroundColor: "#1C1C1C" }}
     >
       {/* The photo is dimmed on its own layer. A filter on the section itself
@@ -38,7 +38,7 @@ export default function Hero() {
         fill
         priority
         sizes="100vw"
-        className="pointer-events-none -z-10 object-cover"
+        className="hero-entrance-image pointer-events-none -z-10 object-cover"
         style={{ filter: "brightness(0.7) saturate(0.9)" }}
       />
       {/* Scrim, not a second dimmer. Raised only as far as the copy allows: the
@@ -79,7 +79,7 @@ export default function Hero() {
             {/* Main Heading */}
             <h1
               id="hero-heading"
-              className="font-display font-extrabold tracking-[-0.03em] leading-[0.95] max-w-[900px]"
+              className="hero-entrance-heading font-display font-extrabold tracking-[-0.03em] leading-[0.95] max-w-[900px]"
               style={{
                 textShadow: "0 2px 28px rgba(0,0,0,0.8), 0 1px 3px rgba(0,0,0,0.6)",
                 fontSize: "clamp(34px, 4vw, 52px)",
@@ -92,7 +92,7 @@ export default function Hero() {
 
             {/* Supporting Copy */}
             <p
-              className="max-w-[650px] text-[20px] leading-[1.55] sm:text-[17px]"
+              className="hero-entrance-copy max-w-[650px] text-[20px] leading-[1.55] sm:text-[17px]"
               style={{
                 textShadow: "0 1px 14px rgba(0,0,0,0.85)",
                 color: "#F4F4F1"
@@ -102,7 +102,7 @@ export default function Hero() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="hero-entrance-actions mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Button
                 href={quoteHref}
                 size="lg"
