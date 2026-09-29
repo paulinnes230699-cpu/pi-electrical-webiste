@@ -35,7 +35,7 @@ export default function AreasBand() {
           <div className="lg:col-span-8">
             <ul
               role="list"
-              className="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-4 lg:grid-cols-7"
+              className="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-4"
             >
               {AREAS.map((area) => (
                 <li
@@ -52,6 +52,12 @@ export default function AreasBand() {
                   ) : null}
                 </li>
               ))}
+              <li className="flex min-h-16 flex-col items-center justify-center gap-0.5 bg-warm px-4 py-4 text-center">
+                <span className="font-display text-base font-extrabold tracking-[-0.015em] text-ink">
+                  Outside Scotland
+                </span>
+                <span className="text-xs leading-snug text-muted">By request</span>
+              </li>
             </ul>
 
             <div className="mt-8 rounded-[2px] border-l-4 border-line-strong bg-surface px-5 py-4">

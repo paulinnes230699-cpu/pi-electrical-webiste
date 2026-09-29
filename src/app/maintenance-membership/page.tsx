@@ -101,12 +101,14 @@ export default function MembershipPage() {
 
           <ul role="list" className="mt-8 grid gap-px border border-line bg-line sm:grid-cols-2">
             {MEMBERSHIP.valueProposition.map((item) => (
-              <li key={item} className="flex items-start gap-3 bg-warm px-5 py-4">
+              <li key={item} className="flex items-start gap-3 bg-warm px-5 py-4 sm:[&:last-child:nth-child(odd)]:col-span-2">
                 <span
                   aria-hidden="true"
-                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2a2a2a] text-black"
+                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#24663d] text-white"
                 >
-                  <span className="text-[0.6875rem] leading-none">✓</span>
+                  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+                    <path d="m4 10 4 4 8-8" />
+                  </svg>
                 </span>
                 <span className="text-[0.9375rem] leading-relaxed text-ink">{item}</span>
               </li>
@@ -139,7 +141,7 @@ export default function MembershipPage() {
                   >
                     <span
                       aria-hidden="true"
-                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#2a2a2a]-ink"
+                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#24663d]"
                     />
                     {item}
                   </li>
@@ -249,7 +251,7 @@ export default function MembershipPage() {
               <li key={step.step} className="flex gap-4 bg-warm p-5">
                 <span
                   aria-hidden="true"
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#2a2a2a] font-mono text-sm font-bold text-black"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#2a2a2a] font-mono text-sm font-bold text-white"
                 >
                   {step.step}
                 </span>
