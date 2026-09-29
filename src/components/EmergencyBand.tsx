@@ -8,7 +8,7 @@ import { directWhatsAppUrl } from "@/lib/whatsapp";
  * Emergency band.
  *
  * Dark surface section as a visual break on the light page.
- * All accent colours are dark grey (#2a2a2a).
+ * High-contrast call and WhatsApp buttons make urgent contact easy to find.
  * The logo mark uses --color-logo-green separately.
  */
 export default function EmergencyBand() {
@@ -23,7 +23,7 @@ export default function EmergencyBand() {
             <p className="eyebrow flex items-center gap-2.5 text-white">
               <span
                 aria-hidden="true"
-                className="inline-block h-2 w-2 rounded-full bg-[#2a2a2a] motion-safe:animate-pulse"
+                className="inline-block h-2 w-2 rounded-full bg-amber-400 motion-safe:animate-pulse"
               />
               {BUSINESS.emergency.enquiriesLabel}
             </p>
@@ -32,8 +32,9 @@ export default function EmergencyBand() {
               id="emergency-heading"
               className="mt-6 text-display-lg text-white"
             >
-              Electrical emergency? Call-outs accepted{" "}
-              <span className="text-white">day and night</span>.
+              <span className="text-amber-400">Electrical emergency?</span>{" "}
+              Call-outs accepted{" "}
+              <span className="text-amber-400">day and night</span>.
             </h2>
 
             <p className="mt-6 max-w-[56ch] text-lg leading-relaxed text-muted-dark">
@@ -55,7 +56,7 @@ export default function EmergencyBand() {
               href={BUSINESS.phone.href}
               size="lg"
               arrow
-              className="w-full"
+              className="emergency-call-button w-full"
               analyticsEvent="phone_clicked"
               analyticsLocation="emergency"
               analyticsAction="emergency_call_primary"
@@ -69,7 +70,7 @@ export default function EmergencyBand() {
               variant="outline"
               dark
               external
-              className="w-full"
+              className="emergency-whatsapp-button w-full"
               analyticsEvent="whatsapp_quote_clicked"
               analyticsLocation="emergency"
               analyticsAction="emergency_whatsapp"

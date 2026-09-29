@@ -479,3 +479,34 @@ img { max-width: 100%; height: auto; }
 .hero-cta-secondary svg {
   color: inherit;
 }
+
+/* Emergency contacts must stand out against the dark section. */
+a.emergency-call-button {
+  background-color: #fbbf24;
+  color: #171717;
+  border: 2px solid #fbbf24;
+  min-height: 60px;
+  font-weight: 800;
+}
+a.emergency-call-button:hover {
+  background-color: #fde68a;
+  border-color: #fde68a;
+  color: #171717;
+}
+a.emergency-whatsapp-button {
+  background-color: #ffffff;
+  color: #14532d;
+  border: 2px solid #ffffff;
+  min-height: 60px;
+  font-weight: 700;
+}
+a.emergency-whatsapp-button:hover {
+  background-color: #dcfce7;
+  border-color: #dcfce7;
+  color: #14532d;
+}
+a.emergency-call-button:focus-visible,
+a.emergency-whatsapp-button:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+}
