@@ -12,7 +12,6 @@
     ink    #151816 on warm #F7F7F3 ........ 16.65:1 AAA  (body text)
     muted  #626963 on warm #F7F7F3 ......... 5.26:1  AA   (secondary text)
     muted-dark #A7AEA8 on warm #F7F7F3 ..... 4.63:1  AA   (muted text)
-    star      #A37F00 on warm #F7F7F3 ...... 3.50:1  AA   (stars)
     ========================================================================== */
 @theme {
   /* Surfaces */
@@ -47,8 +46,8 @@
   --color-trust-value: #ffffff;
   --color-trust-label: #b7b7b1;
 
-  /* Review stars - Google rating yellow. See the note in the header comment. */
-  --color-star: #a37f00;
+  /* Consistent yellow rating stars across light and dark sections. */
+  --color-star: #fabb05;
   --color-star-dark: #fabb05;
 
   /* Type */

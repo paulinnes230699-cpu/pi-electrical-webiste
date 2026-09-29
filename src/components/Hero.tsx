@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { BUSINESS, HERO_INTRO } from "@/data/business";
 import Button from "./Button";
+import Stars from "./Stars";
 
 /**
  * Hero.
@@ -112,6 +113,13 @@ export default function Hero() {
               >
                 Call {BUSINESS.phone.display}
               </Button>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-white">
+              <Stars rating={5} tone="dark" />
+              <p>
+                <span className="font-semibold">5-star customer feedback</span>
+              </p>
             </div>
 
             {/* Divider */}
