@@ -87,7 +87,8 @@ export default function Hero() {
               }}
             >
               Providing all aspects
-              <br className="hidden sm:block" /> of electrical work.
+              <br className="hidden sm:block" /> of{" "}
+              <span style={{ color: "#4bb874" }}>electrical work.</span>
             </h1>
 
             {/* Supporting Copy */}
