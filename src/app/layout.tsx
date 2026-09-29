@@ -3,6 +3,7 @@ import { Inter, Archivo } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import MobileActionBar from "@/components/MobileActionBar";
 import { BUSINESS, SITE_URL } from "@/data/business";
 import { SOCIAL } from "@/data/social";
@@ -209,6 +210,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <MobileActionBar />
+        <FloatingWhatsApp />
       </body>
       <GoogleAnalytics gaId="G-5SXH1G36RR" />
     </html>
