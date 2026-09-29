@@ -135,7 +135,7 @@ export default function MobileMenu({
         <a
           href={quote.href}
           onClick={quote.onClick}
-          className="flex min-h-14 items-center justify-center rounded-lg border-2 border-amber-400 bg-amber-400 font-bold text-neutral-900 transition-colors hover:border-amber-200 hover:bg-amber-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          className="flex min-h-14 items-center justify-center rounded-lg border-2 border-white bg-white font-bold text-black transition-colors hover:border-neutral-200 hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
         >
           Get a free quote
         </a>
