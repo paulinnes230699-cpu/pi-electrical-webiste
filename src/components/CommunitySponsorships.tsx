@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { SPONSORSHIPS, SPONSORSHIP_PHOTO } from "@/data/sponsorships";
+import { SPONSORSHIPS } from "@/data/sponsorships";
+import SponsorshipCarousel from "./SponsorshipCarousel";
 import SectionHeading from "./SectionHeading";
 
 export default function CommunitySponsorships() {
-  const photo = SPONSORSHIP_PHOTO;
 
   return (
     <section aria-labelledby="community-heading" className="border-b border-line bg-warm">
@@ -42,19 +42,7 @@ export default function CommunitySponsorships() {
             </li>
           ))}
         </ul>
-        {photo && (
-          <figure className="mt-10 overflow-hidden rounded-lg border border-line bg-white">
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              width={photo.width}
-              height={photo.height}
-              sizes="(max-width: 1280px) 100vw, 1280px"
-              className="h-auto w-full"
-            />
-            <figcaption className="px-6 py-4 text-sm leading-relaxed text-muted">{photo.caption}</figcaption>
-          </figure>
-        )}
+        <SponsorshipCarousel />
       </div>
     </section>
   );

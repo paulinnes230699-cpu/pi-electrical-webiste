@@ -14,15 +14,8 @@ export const SPONSORSHIPS = [
   },
 ];
 
-export type SponsorshipPhoto = {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  caption: string;
-};
-
-// When the team photograph arrives, add it to public/images and replace null
-// with its /images/... path, descriptive alt text, actual dimensions and caption.
-// Suggested caption: New season, new strips—proudly sponsored by PI Electrical.
-export const SPONSORSHIP_PHOTO: SponsorshipPhoto | null = null;
+export const SPONSORSHIP_PHOTOS = [
+  { src: "/images/midlothian-sponsored-team-1-graded.png", rotation: -0.3, alt: "Midlothian Indoor Bowling Club team in their navy and blue sponsored strips" },
+  { src: "/images/midlothian-sponsored-team-2.jpeg", rotation: -0.4, alt: "Midlothian Indoor Bowling Club players standing and seated together in their new strips" },
+  { src: "/images/midlothian-sponsored-team-3-graded.png", rotation: 0, alt: "Midlothian Indoor Bowling Club team posing by the scoreboard in their sponsored strips" },
+];
