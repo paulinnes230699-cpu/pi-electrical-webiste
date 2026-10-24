@@ -1,12 +1,14 @@
+import { sendGAEvent } from "@next/third-parties/google";
+
 /**
  * ============================================================================
  * ANALYTICS
  * ----------------------------------------------------------------------------
  * Google Analytics 4 (tag G-5SXH1G36RR) is loaded via `@next/third-parties`
  * in the root layout, with the client's explicit instruction. Its gtag.js
- * reads this same `window.dataLayer`, so `track()` events now flow into GA4
- * automatically. Events also dispatch a `pi:track` CustomEvent, so either
- * mechanism can pick them up.
+ * receives events through sendGAEvent using the Google tag event command.
+ * Plain dataLayer objects require GTM and are not sufficient for this setup.
+ * The pi:track CustomEvent remains available to local listeners.
  *
  * PRIVACY - IMPORTANT
  * -------------------
@@ -42,19 +44,17 @@ export type AnalyticsContext = {
   service?: string;
 };
 
-interface DataLayerWindow extends Window {
-  dataLayer?: object[];
-}
-
 function push(event: AnalyticsEvent, context: AnalyticsContext) {
   if (typeof window === "undefined") return;
 
   const payload = { event, ...context };
 
-  const w = window as DataLayerWindow;
-  if (Array.isArray(w.dataLayer)) {
-    w.dataLayer.push(payload);
-  }
+  const parameters = {
+    location: context.location,
+    action: context.action,
+    ...(context.service ? { service: context.service } : {}),
+  };
+  sendGAEvent("event", event, parameters);
 
   window.dispatchEvent(new CustomEvent("pi:track", { detail: payload }));
 }
