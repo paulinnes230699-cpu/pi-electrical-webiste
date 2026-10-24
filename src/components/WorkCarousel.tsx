@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { useId, useRef } from "react";
 import Image from "next/image";
 import { useAutoAdvance, ALL_WIDTHS } from "@/lib/auto-advance";
 import { cx } from "@/lib/cx";
@@ -111,6 +111,7 @@ export default function WorkCarousel({
   className,
 }: WorkCarouselProps = {}) {
   const imageList = images ?? WORK_GALLERY;
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const {
     eyebrow = "Recent work",
     title = "Electrical work across homes & businesses",
@@ -133,6 +134,7 @@ export default function WorkCarousel({
     count: imageList.length,
     interval: INTERVAL_MS,
     maxWidth: ALL_WIDTHS,
+    onlyWhenVisible: true,
     /* No runway. Duplicating the first photographs at the tail makes the wrap a
        smooth one-stride step, but the copies are the same pictures, so the
        visitor watches slide 1 arrive twice in a row. Cutting instead shows every
@@ -164,19 +166,28 @@ export default function WorkCarousel({
           />
         )}
 
-        {/*
-           The scroller. Same interaction contract as QuickActions: any pointer,
-           touch, focus, wheel or key event means the visitor has taken over, so
-           the loop stops permanently and never resumes. See lib/auto-advance.ts
-           for why that is a stop rather than a pause.
-         */}
+        {/* Vertical page scrolling keeps autoplay running. Direct horizontal
+            interaction hands the carousel over to the visitor. */}
         <ul
           ref={ref}
           data-work-carousel
-          onPointerDown={stop}
-          onTouchStart={stop}
+          onPointerDown={(event) => { if (event.pointerType === "mouse") stop(); }}
+          onTouchStart={(event) => {
+            const touch = event.touches[0];
+            touchStart.current = { x: touch.clientX, y: touch.clientY };
+          }}
+          onTouchMove={(event) => {
+            const start = touchStart.current;
+            if (!start) return;
+            const touch = event.touches[0];
+            const dx = Math.abs(touch.clientX - start.x);
+            const dy = Math.abs(touch.clientY - start.y);
+            if (dx > 10 && dx > dy) stop();
+          }}
+          onTouchEnd={() => { touchStart.current = null; }}
+          onTouchCancel={() => { touchStart.current = null; }}
           onFocus={stop}
-          onWheel={stop}
+          onWheel={(event) => { if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) stop(); }}
           onKeyDown={stop}
           className={cx(
             "-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto",

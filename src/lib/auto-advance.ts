@@ -27,7 +27,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * is the mis-tap guard: a tile shifting under a finger that is reaching for it
  * is how someone ends up tapping "Emergency" when they meant "Free quote".
  *
- * Note what is NOT a pause: the strip being scrolled out of view. It cycles from
+ * By default, being scrolled out of view is not a pause. Callers can opt into
+ * visibility gating with onlyWhenVisible. It cycles from
  * page load. The homepage hero is about 1435px tall on a phone, so the band does
  * not appear until roughly 600px of scrolling, and gating the loop on visibility
  * made the feature look entirely dead - you had to already be looking at the
@@ -112,6 +113,7 @@ export function useAutoAdvance<T extends HTMLElement>({
   loop = false,
   wrapToStart = false,
   endHoldMs = 0,
+  onlyWhenVisible = false,
 }: {
   /** Delay between steps, in ms. */
   interval?: number;
@@ -156,6 +158,8 @@ export function useAutoAdvance<T extends HTMLElement>({
    * looks like the strip glitching rather than starting a new cycle.
    */
   endHoldMs?: number;
+  /** Wait until the strip is visible before starting each autoplay interval. */
+  onlyWhenVisible?: boolean;
 }): AutoAdvance<T> {
   const ref = useRef<T | null>(null);
 
@@ -448,6 +452,7 @@ export function useAutoAdvance<T extends HTMLElement>({
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const mobile = window.matchMedia(maxWidth);
+    let visible = !onlyWhenVisible;
 
     const tick = () => {
       timerRef.current = null;
@@ -456,7 +461,7 @@ export function useAutoAdvance<T extends HTMLElement>({
       if (stoppedRef.current) return;
       if (reduceMotion.matches) return;
       if (!mobile.matches) return;
-      if (document.hidden) return;
+      if (document.hidden || !visible) return;
 
       /* An open overlay (mobile menu, quote modal) marks everything outside
          the panel inert. Moving a strip the visitor cannot see or reach is
@@ -476,12 +481,14 @@ export function useAutoAdvance<T extends HTMLElement>({
 
     const schedule = () => {
       clearTimer();
-      if (!stoppedRef.current) timerRef.current = setTimeout(tick, interval);
+      if (!stoppedRef.current && visible) timerRef.current = setTimeout(tick, interval);
     };
 
-    /* Deliberately no IntersectionObserver here. The band sits far below the
-       fold on a phone, so pausing while it is off screen meant it had not moved
-       a step by the time anyone could see it. It cycles from page load instead. */
+    const observer = onlyWhenVisible ? new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting && entry.intersectionRatio >= 0.25;
+      schedule();
+    }, { threshold: [0, 0.25] }) : null;
+    if (observer && ref.current) observer.observe(ref.current);
 
     /* Hidden tab, or a resize across the breakpoint: recompute. */
     const onVisibility = () => {
@@ -498,11 +505,12 @@ export function useAutoAdvance<T extends HTMLElement>({
 
     return () => {
       clearTimer();
+      observer?.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       reduceMotion.removeEventListener("change", onMedia);
       mobile.removeEventListener("change", onMedia);
     };
-  }, [count, interval, maxWidth, next, clearTimer, endHoldMs]);
+  }, [count, interval, maxWidth, next, clearTimer, endHoldMs, onlyWhenVisible]);
 
   /* ---------------------------------------------------------------------
    * Keep the indicators honest after a manual swipe
