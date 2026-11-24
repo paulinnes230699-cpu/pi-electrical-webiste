@@ -66,15 +66,15 @@ export default function SponsorshipCarousel() {
           <div key={photo.src} className="relative isolate overflow-hidden aspect-square max-h-[680px] w-full shrink-0 snap-center bg-[#171d19]" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${SPONSORSHIP_PHOTOS.length}`}>
             {visible && !reducedMotion && active === index && (
               <div key={`confetti-${active}`} className="sponsor-confetti" aria-hidden="true">
-                {Array.from({ length: 24 }, (_, particle) => (
+                {Array.from({ length: 48 }, (_, particle) => (
                   <span
                     key={particle}
-                    className={particle >= 12 ? "hidden sm:block" : "block"}
+                    className={particle >= 24 ? "hidden sm:block" : "block"}
                     style={{
                       [particle % 2 ? "right" : "left"]: "2%",
-                      backgroundColor: ["#4bb874", "#e9bd54", "#6aafcf"][particle % 3],
-                      "--confetti-x": `${(particle % 2 ? -1 : 1) * (8 + (particle % 6) * 7)}px`,
-                      "--confetti-rise": `${180 + (particle % 5) * 65}px`,
+                      backgroundColor: ["#4ade80", "#facc15", "#38bdf8", "#fb7185", "#c084fc", "#fb923c"][particle % 6],
+                      "--confetti-x": `${(particle % 2 ? -1 : 1) * (60 + ((particle * 7) % 19) * 24)}px`,
+                      "--confetti-rise": `${180 + ((particle * 3) % 7) * 60}px`,
                       "--confetti-spin": `${(particle % 2 ? -1 : 1) * (180 + particle * 30)}deg`,
                       animationDelay: `${(particle % 6) * 65}ms`,
                     } as CSSProperties}
